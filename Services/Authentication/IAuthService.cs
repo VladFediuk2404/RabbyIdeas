@@ -1,10 +1,11 @@
 using Dtos;
 
-namespace Servises
+namespace Services
 {
     public interface IAuthService
     {
-        Task<AuthResponseDto> RegisterAsync(RegisterDto dto);
+        Task RegisterAsync(RegisterDto dto);
         Task<AuthResponseDto> LoginAsync(LoginDto dto);
+        Task<AuthResponseDto> ConfirmOtpAsync(ConfirmOtpDto dto); 
     }
 }

@@ -1,6 +1,6 @@
 using Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Servises;
+using Services;
 
 namespace Controllers
 {
@@ -15,13 +15,27 @@ namespace Controllers
             _authService = authService;
         }
 
+        [HttpPost("confirm-otp")]
+        public async Task<IActionResult> ConfirmOtp([FromBody] ConfirmOtpDto dto)
+        {
+            try
+            {
+                var result = await _authService.ConfirmOtpAsync(dto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             try
             {
-                var result = await _authService.RegisterAsync(dto);
-                return Ok(result);
+                await _authService.RegisterAsync(dto);
+                return Ok(new { message = "Check your email for confirmation code." });
             }
             catch (Exception ex)
             {

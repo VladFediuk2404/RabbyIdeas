@@ -22,6 +22,7 @@ namespace Data
         public DbSet<TaskCommit> TaskCommits { get; set; }
         public DbSet<TaskDeliverable> TaskDeliverables { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<OtpCode> OtpCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -115,10 +116,10 @@ namespace Data
 
             // ProjectMember
             modelBuilder.Entity<ProjectMember>()
-                .HasOne(pm => pm.Project)
-                .WithMany(p => p.Members)
-                .HasForeignKey(pm => pm.ProjectId)
-                .OnDelete(DeleteBehavior.Cascade);
+            .HasOne(pm => pm.Employee)
+            .WithMany(e => e.Projects)
+            .HasForeignKey(pm => pm.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ProjectMember>()
                 .HasOne(pm => pm.Employee)
